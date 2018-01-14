@@ -13,6 +13,9 @@
   sync sync, sync.. time to catch up on emails
   
   build time, yayy 10 30 pm grr
+  getting manifest from above project, naming backup
+  getting manifests from https://github.com/ripee/local_manifests.git for my devices
+  
 
 1-13-18 Finally installed Linux and got stable on my laptop see 
 
