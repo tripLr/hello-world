@@ -1,5 +1,20 @@
-# hello-world
-newest posts at top of readme
+# project learn to install and use Linux  
+newest posts at top 
+
+1-13-18 So i have a second drive on my HP laptop installed with the following. 
+        www.lxle.net 
+        if you have an older computer with old drivers or first time linux users to install this distribution
+ 
+        i have installed the partitions as / 'root' 25 gb, /var 25 gb, swap 25 gb, /tmp 25 gb, /home remainder of drive 500+ gb
+            this is because the drives will be really busy while compiling, and this is the server scheme. normal swap files are 
+            usually 1.5 times usable memory. use more for stability. /var and /tmp are where the system unpacks files and
+            uses temp cache for web and other processes. everything the all users installs should be in /home
+            so lets say you upgrade or build your own kernel. the grub bootloader is installed in the boot partition of the 
+            drive(0) , Grub allows you to boot from multiple OS and multiple Kernels . cool
+        
+        I have also finally figured out how to install Debian.
+        
+            
 
 1-7-18  updated partitions . again. Reinstall again. For /var only had 25 mb instead of GB
 .
