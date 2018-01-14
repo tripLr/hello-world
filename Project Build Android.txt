@@ -1,0 +1,28 @@
+# build projects, learn how to build LineageOS on the 
+# galaxy note 4 verizon sm-t910v and the 
+# galaxy tab a2 sm-t710
+# newer posts on top
+
+1-13-18 my first sync and build project sm-t910V
+        note: dont use wireless network to sync repo, too much BER
+        
+        https://forum.xda-developers.com/note-4/general/guide-build-lineageos-14-1-trltexx-t3567885
+        
+        however this is not for the note 4 verizon, so i am going to edit the manifest.xml from @ripee 
+        
+  sync sync, sync.. time to catch up on emails
+  
+  build time, yayy 10 30 pm grr
+
+1-13-18 Finally installed Linux and got stable on my laptop see 
+
+https://github.com/tripLr/hello-world/blob/master/README%20Install%20Linux.md
+
+        
+        
+       
+        
+        
+
+1-10-11 after several installs of linux on my 2008 laptop, the only distribution of ubuntu i could get up and running with NO 
+Glitches was http://www.lxle.net yayy to linux

@@ -1,5 +1,0 @@
-# newer posts on top
-
-
-1-10-11 after several installs of linux on my 2008 laptop, the only distribution of ubuntu i could get up and running with NO 
-Glitches was http://www.lxle.net yayy to linux
