@@ -3,6 +3,11 @@
 # galaxy tab a2 sm-t710
 # newer posts on top
 
+1-14-18 9 am had to shut down project last nite, something was wrong in one of my steps.
+        I got to sync the entire lineageos repo to my laptop. that took 3 trys and several hours due to network issues.
+        and i somehow broke the process so when i got to the make the build step on the below guide, i got some errors. 
+        so i am going to read more in the thread and tru again this afternoon. 
+        
 1-13-18 my first sync and build project sm-t910V
         note: dont use wireless network to sync repo, too much BER
         
