@@ -1,0 +1,105 @@
+# hello-world
+How to Build and upgrade a linux Kernel on (pc and pc hardware based servers)
+<meta name="keywords" content="how, to, build, linux, kernel, properly"> 
+<meta name="robots" content="index,follow">
+
+Ok, if you read my other projects, you have seen I have been learing linux
+There have been a quite a few guides I have followed that work, but not to the best of my expierence of building about 50 kernels 
+on my older laptop, because not may people go in depth on their how to's
+
+so here is the Start of how to build a kernel.
+
+first, use http://www.kernel.org to see your kernel sources
+
+then I found the basics at https://kernelnewbies.org/KernelBuild
+
+which is not directly linked at kernelnewbies. it was buried
+
+also https://www.makeuseof.com/tag/compile-linux-kernel/ is one of the best i have found
+
+so if you follow the first, at kernel newbies
+
+download the tools
+download the kernel OR ( reccomended )
+
+I download the single branch on each build by using this file as a reference
+Because an older driver MAY not compile on a newer kernel
+like nvidia-304. theyre may be patches up to v4.14.x but not rc, or 4.15.x at all,
+so i have to run nouveau driver ( grr )
+
+git clone -b v4.15.9 --single-branch  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git v4.15.9 
+# longterm stable
+git clone -b v4.14.26 --single-branch  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git v4.14.26
+# release canidate for testing linus
+git clone -b v4.16-rc4 git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git v4.16-rc4
+
+so to explain 
+git clone -b v4.15.9 --single-branch  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git v4.15.9 
+means 
+get, clone ( download all the files locally ) v4.15.9 branch only from kernel.org git public server into v4.15.9 directory
+
+if i didnt have the v4.15.9 at the end, it would make a linux-stable directory
+
+if you use kernel newbies directions, it will download ALL the kernel sources, and ALL the drivers for EACH kernel
+and you will have to select the branch using their method.
+
+this way i have a clean build directory for EACH kernel i build!
+
+now we need a configuration file called '.config. in the build directory 'v4.15.9' or whatever kernel version you select.
+
+for the FIRST time you build a kernel on the MACHINE you want it, 
+1. turn OFF screensaver
+2. Turn OFF screensaver lock desktop
+3. any sleep or power functions turn OFF
+   or your build will PAUSE or STOP and or fail
+4. you need the default config file.
+
+run
+make defconfig ( see the makeuseof.com instructions )
+this will make a default .config file for your kernel for your processor class ( a generic configuration with ALL drivers )
+
+run make OR make j( number of threads )
+if you have a 2 core processor, you can type make j2, make j3, or make j4 . your CPU usage will be high, and wont take all night
+
+wait,
+then install the kernel ( kernel newbies )
+on a debian or Ubuntu system , your install script will run update the grub file
+to confirm, run sudo update-grub
+
+build version number 2.
+after you do the above, run make menuconfig and go to general setup and make a custom kernel note for your kernel
+select your cpu version and cpu options
+select the drivers you want to keep and toss..
+( warning, if you mess this up, it wont boot, or it wont load the sccard or video driver you need )
+
+run make (j(threads))
+install
+
+build version number 3
+take your default generic kernel config, (OR the one you just built in 2 ) and copy it to your build folder ( kernel newbies method )
+However your generic or custom you just made, will NOT have the newer kernel options selected
+
+if you run make localmodconfig WITHOUT a .config file it will make a .config file based on ONLY the running modules you have and 
+select them for the current kernel version
+
+if you run make localmodconfig WITH a .config file it will use your .config file and make NEW additions to the kernel modification
+from your source, but will NOT modifiy exisisting settings. WAY COOL
+
+so if your new source has a fix for a BUG or a new Feature, you will be asked to include (yes or no ) or build a driver module (Yes,
+NO, or Module ) to build the feature
+
+all modules can be selected yes, if you dont have the driver it wont load it after you build it !
+
+All kernel options can be built in, and it most likely wont affect performance
+
+I usually select a kernel add on like -HP-triplr and the CPU (athalon or Intel) and load microcode options
+with ALL partition types
+All Block types
+All Networking types
+and ALL USB driver modules
+
+Usually, my kernels work...usually
+
+
+
+
