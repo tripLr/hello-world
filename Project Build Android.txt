@@ -3,6 +3,10 @@
 # galaxy tab a2 sm-t710
 # newer posts on top
 
+5-28-18
+   I got my build server up and running. My laptop was only able to build a kernel in about 4 hours. 2 minutes max.
+   64 cpu cores and SAS 6 Gb/s with 32 gigabytes of memory. here goes a build...
+
 1-14-18 9 am had to shut down project last nite, something was wrong in one of my steps.
         I got to sync the entire lineageos repo to my laptop. that took 3 trys and several hours due to network issues.
         and i somehow broke the process so when i got to the make the build step on the below guide, i got some errors. 
