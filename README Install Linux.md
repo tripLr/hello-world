@@ -4,7 +4,16 @@ newest posts at top
 
 <meta name="keywords" content="linux,mint,ubuntu,how-to,how to,install,server,destktop,fedora,redhat"> 
 
-update 3-18-18
+update 3-28-18
+    Ok, here is what you need to know about high end servers.
+    Stability and dependancies. to achive this, Linux achieves this in several ways.
+    1. Debian only uses open source for all its programs and kernel install. DO not install downloads, or your going to
+         get dependancies that are inconsistant. cleaning a linux system is hard. installing PPA is really difficult.
+    2. Ubuntu allows "PPA" installs , but that is another way to get your binaries out of sync
+    3. Red-hat and its sibling, Fedora are a little/lot more hardened for having needed stabile software
+   4. Dell makes open source all its drivers. really really nice . 
+   
+3-18-18
    its been a while. i have been cramming nights on building linux for my older laptop in prelude to building a server. 
    i have one thing to say about any ubuntu distro.  find a desktop that you like, the core is all the same.
    i am running linux Mint, based on ubuntu. it has a excellent software center and the desktop you see is what you like, not really the programs annd core. those all come from canonical servers ( ubuntu )
