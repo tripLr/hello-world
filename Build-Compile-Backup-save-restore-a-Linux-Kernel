@@ -1,0 +1,258 @@
+3-28-18
+Chapter 1
+Prepare your build and build your kernel.
+
+When Building a kernel use your home folder, not a system folder that you need root access. you can accidently compile existing
+  modules that dont have updated code. Use update code.
+  
+For this build I am using Linux Mint, Ubuntu Mate version 16+
+
+First Check out www.Kernel.org for the latest kernel you want to build.
+  eg 4.15.17
+  
+Then check out https://kernelnewbies.org/KernelBuild for some general guidelines.
+
+I created some folders in my git folder becuse I build other stuff too 
+# for stable kernels
+  ~/Desktop/Build/git/kernels/linux-stable
+    and                     
+# for development directly from Linux Torvalds    
+  ~/Desktop/Build/git/kernels/linux
+  
+  I created several aliases in my ~/.bash_aliases called 
+  alias cdB='~/Desktop/Build'
+  alias cdS='~/Desktop/Build/git/kernels/linux-stable'
+  alias cdL='~/Desktop/Build/git/kernels/linux'
+so I can quickly go to my compile folders
+
+I also created 
+  mkdir ~/backup/kernels
+for moving backup kernels to see next section
+
+Installing Binaries
+  First prepare your install 
+sudo apt get update
+sudo apt get upgrade
+sudo apt-autoremove
+
+from KernelNewbies
+sudo apt-get install libncurses5-dev gcc make git exuberant-ctags bc libssl-dev
+
+find your kernel at kernel.org paste the following line into a text file and save in your terminal in your linux-stable folder 
+
+!#/bin/bash
+git clone -b v4.15.9 --single-branch  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git v4.15.9 
+
+but edit the kernel name v4.15.9 for your kernel. newest today is 4.15.14
+so your line should be 
+
+git clone -b v4.15.14 --single-branch  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git v4.15.14
+
+So now you have a script,
+And when you run the git clone command, it will only download that branch not the whole source! Save some space.
+It will also create a folder for each build, that you can delete later, or backup to your backup folder .
+cd v4.15.14
+~/Desktop/Build/git/kernels/linux-stable/v4.15.14
+
+cdL
+~/Desktop/Build/git/kernels/linux$
+
+OR.....
+If you want the Linus Torvalds release canidate, again from kernel newbies site, but just want the single branch,
+ git clone -b v4.16-rc7 --single-branch git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git v4.16-rc7
+
+cd v4.16-rc7
+~/Desktop/Build/git/kernels/linux/v4.16-rc7
+
+You should now be ready to compile a kernel..
+
+Chapter 2
+05-28-18
+Making your Config File..
+
+Warning
+first, BOOT INTO a generic stable kernel using your grub boot menu 
+
+Compile a kernel for the first time
+Kernelnewbies and other guides dont explain what is about to happen.
+First you need to set up the build process to build the kernel, this is called the configuration
+If your in the build folder like
+~/Desktop/Build/git/kernels/linux-stable/v4.15.14
+you need a file called '.config.' for the kernel to compile.
+
+Method 1. 
+  safest and longest to compile. be prepared for a couple hours at least
+
+make defconfig
+  is the command that starts a script, reads your cpu type and creates the generic cpu type ( in my case amd64 ).
+this also creates the .config file with ALL the driver modules and CPU options.
+
+If you run uname-r you will most likely have 'generic' after your running kernel name.
+
+This is what you will be compiling.
+Most distro's like Linux Mint, Ubuntu, and Debian ship with an older kernel, but only have a slightly upgraded kernel, 
+  but not with the spectre security patches installed. you CAN patch the kernel, but I havent tried yet.
+
+So, runnig make defconfig will make a generic kernel for your processor type.
+
+method 2 
+complete custom (better know what your doing) first timers be prepared to spend several hours.
+make menuconfig or make nconfig
+  This will copy your running kernel config, from your /boot folder and create a editable list of each option
+WARNING, if you have a bad kernel you booted up, you will still have a bad kernel when you run this command
+
+However, you can select every driver and option you wish to compile into a module or kernel option.
+in this case, I want to run make menuconfig. 
+This gives you a tree- logic based yes no Module or yes no option on every item.
+Some will say NEW if this option is NOT in your current kernel
+It is possible to select items for your kernel that A. wont make it boot, B, compile drivers you dont need into the kernel, C,
+  compile items that are goint cause a crash !
+
+There is a option you need every time you want to change something . Help
+Click the help button to see each item's help. 
+I will tell you about the other options Before you decide to make the config file
+
+option 3 getting easier ! but be warned, 
+it will NOT compile anything USB devices or hard drive partitions, Block types, Network protocals or devices not turned on
+or may need, but is very helpful to a builder, because
+
+OPTION 2 and 3 combined make a lean mean kernel. lets get to the 3 details
+
+make localmodconfig
+
+Yes its a long command, but here is what it does.
+Like make menuconfig, localmodconfig looks at your whole computers currently running modules and selects them and ask you only
+about new options.
+
+You will see a bunch of output that automatically selects N or Y depending only on your computer.
+it stops on a NEW option and asks you y/N or Y/N/M for yes, no , or module.
+Stop and hit the ? to see what you can in the built in help function.
+
+ITS always safe to hit M for module. if the kernel can use the new function, it will load it, but wont compile it into the 
+kernel.
+
+My 2methods, detailed, safe and takes a long time the first couple times.
+
+more later
+
+Chapter 3
+Compiling your Kernel
+
+more Later
+
+Chapter 4
+03-25-18
+by tripLr
+tripLr
+
+Complete kernel(s) backup and removal
+    <hint> Never delete the last installed generic kernel your distro came with. it will save your bacon
+<goals>
+    Identify your kernel you want to remove, make sure you are not going to delete your running kernel.
+    Backup entire kernel structure
+    Remove selected Kernels and files and traces that may mess you up later, especially if your like me and
+       build a lot of kernels
+
+<Commands to learn>
+        update-grub2, update-initramfs, mkdir, mv, rm, ls, and sudo
+
+< folders used >
+    /boot/
+    /lib/modules/
+    /var/lib/initramfs-tools/
+    
+    and your backup folder
+
+First id your current kernel
+uname -r
+
+You will see your current running kernel. 
+example output
+4.13.0-36-generic
+
+!! If this is the kernel you want to delete <STOP> and reboot into your other kernel with your grub menu !!  
+
+If your computer does not show a grub menu, search for 'how to edit grub hidden timeout'. 
+
+So if your in a kernel that you are keeping, 
+
+Run this command
+ls -l /boot
+
+You will see 4 files for EACH kernel
+/boot/config-<kernel name>
+/boot/initrd.img-<kernel name>
+/boot/System.map-<kernel name>
+/boot/vmlinuz-<kernel name>
+
+Your /boot output will have at least one kernel like a generic, or more than one generic, or even custom kernels you installed or built.
+  There will be a couple memtest files, and a /boot/grub folder. If you see more than one copy of your 4 files with a + like 
+<kernelname>+ or <kernelname>.old, you may hav multiple configurations which can cause some confusion and come compile errors.
+   a common compile error is utf8, no locale error. 
+   
+You ONLY need the 4 files above for each kernel to boot.  
+
+Run this next Command
+ls /lib/modules/
+
+Each folder name is where are your modules are installed for each compiled kernel !
+
+Run this next command
+ls /var/lib/initramfs-tools/
+
+You will see every initramfs (init ram file system ) configuration directory for every kernel you have compiled. 
+If you see strange old files in your /boot this folder /var/lib/initramfs-tools/ is looked at in the make modules script
+and the make install script, and sometimes the script makes ALL the initramfs files for all the old kernels too! 
+took me FOREVER to figure this out because NOBODY mentions this in the kernel build guides. Eventuall causes LOTS of compile 
+problems for the initramfs, and you eventually get kernels that hangs.
+
+Backing up all your kernel info
+
+Make a backup kernel folder
+
+mkdir -p ~/backup/kernel/<kernel name>/boot/
+mkdir -p ~/backup/kernel/<kernel name>/lib/modules/
+mkdir -p ~/backup/kernel/<kernel name>/var/lib/initramfs-tools/
+
+Begin move and backup process
+
+<note> To backup only,     
+            Replace mv command with cp. use cp -Rv when copying the module directory
+To remove only use rm command and use rm -Rfv when removing module directory
+
+cd /boot
+sudo mv -vf *<kernel name> ~/backup/kernel/<kernel name>/boot/
+cd /lib/modules/
+sudo mv -vf <kernel name> ~/backup/kernel/<kernel name>/lib/modules/
+cd /var/lib/initramfs-tools/
+sudo mv -fv <kernel name> ~/backup/kernel/<kernel name>/var/lib/initramfs-tools/
+
+Yayy, you have backed up your kernel with file structure and removed your kernel !!
+
+update your grub file
+sudo update-grub2
+
+! done !
+
+<note>, most online guides OMIT the move initramfs detail. If you build lots of kernels, and switch out hardware, or are trying to track down a driver problem, eventuall you will see dpms errors, while compiling drivers. because initramfs loads some basic kernel drivers before boot, it will crash some compiles on your kernel, if an old, non existant /boot/<kernal file> or /lib/modules/<kernel name> is missing !
+
+
+If you installed a kernel with a .deb distrobution like a mainline ubuntu kernel, you can just run
+sudo apt-get remove <kernel name>
+ 
+
+mkdir ~/kernel
+
+sudo rm -v 
+remove kernel in 
+/boot/config-<kernel name>
+/boot/initrd.img-<kernel name>
+/boot/System.map-<kernel name>
+/boot/vmlinuz-<kernel name>
+
+examples
+/boot/config-4.15.12-HP-modules
+/boot/initrd.img-4.15.12-HP-modules
+/boot/System.map-4.15.12-HP-modules
+/boot/vmlinuz-4.15.12-HP-modules
+
