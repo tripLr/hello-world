@@ -1,5 +1,6 @@
-# hello-world
-How to Build and upgrade a linux Kernel on (pc and pc hardware based servers)
+
+How to Build and upgrade a linux Kernel on AMD and Intel 64 based devices
+
 <meta name="keywords" content="how, to, build, linux, kernel, properly"> 
 <meta name="robots" content="index,follow">
 
@@ -7,7 +8,7 @@ Ok, if you read my other projects, you have seen I have been learing linux
 There have been a quite a few guides I have followed that work, but not to the best of my expierence of building about 50 kernels 
 on my older laptop, because not may people go in depth on their how to's
 
-so here is the Start of how to build a kernel.
+So here is the Start of how to build a kernel.
 
 first, use http://www.kernel.org to see your kernel sources
 
@@ -31,7 +32,7 @@ git clone -b v4.15.9 --single-branch  git://git.kernel.org/pub/scm/linux/kernel/
 # longterm stable
 git clone -b v4.14.26 --single-branch  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git v4.14.26
 # release canidate for testing linus
-git clone -b v4.16-rc4 git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git v4.16-rc4
+git clone -b v4.16-rc4 --single-branch git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git v4.16-rc4
 
 so to explain 
 git clone -b v4.15.9 --single-branch  git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable.git v4.15.9 
@@ -79,8 +80,9 @@ build version number 3
 take your default generic kernel config, (OR the one you just built in 2 ) and copy it to your build folder ( kernel newbies method )
 However your generic or custom you just made, will NOT have the newer kernel options selected
 
-if you run make localmodconfig WITHOUT a .config file it will make a .config file based on ONLY the running modules you have and 
-select them for the current kernel version
+if you run make localmodconfig WITHOUT a .config file it will copy your current running
+   .config  make a .config file based on ONLY the running modules you have and 
+      select them for the current kernel version
 
 if you run make localmodconfig WITH a .config file it will use your .config file and make NEW additions to the kernel modification
 from your source, but will NOT modifiy exisisting settings. WAY COOL
@@ -92,11 +94,41 @@ all modules can be selected yes, if you dont have the driver it wont load it aft
 
 All kernel options can be built in, and it most likely wont affect performance
 
-I usually select a kernel add on like -HP-triplr and the CPU (athalon or Intel) and load microcode options
-with ALL partition types
-All Block types
-All Networking types
-and ALL USB driver modules
+So, this build method number 3 consists of this method.
+
+   Go to your build folder, (like v4.14.32 )
+If your running a current generic kernel, copy over your boot config file
+
+cp /boot/config-`uname -r`* .config
+
+run make menuconfig
+
+go into general setup
+go to append version name
+    append the version sting. I use my computer and user name HP-triplr
+this way I can delete or backup the kernel easily.
+
+save config
+
+now plug in all your usb devices and make sure they work. thumb drives, joystick etc..
+
+run make localmodconfig
+
+answer all the new questions that have a N/Y/M option with M, for module. that is a safe answer. 
+all the questions that are Y/N, hit the ? key and you will see the specs for that question. most time it will say,
+   " if you are unsure or dont know what this means answer Y " or N as the case may be.
+if you really dont know, it is safe, mostly to hit yes because the kernel will fail to the no if its built in the
+kernel and that function is not supported. this will show up in the boot log and you can rerun the make menuconfig.
+
+now, you have to RE RUN make menuconfig BEFORE you compile.
+
+this is to ENSURE you have all your drivers, 
+your partition types ( block devices )
+USB devices
+and networking protocols
+
+so, go back to 
+
 
 Usually, my kernels work...usually
 
